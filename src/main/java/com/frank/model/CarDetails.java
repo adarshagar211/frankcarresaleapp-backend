@@ -1,5 +1,7 @@
 package com.frank.model;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +24,5 @@ public class CarDetails {
 	private int yearModel;
 	private double price;
 	private boolean licensed;
-	private String dateAdded;
+	private LocalDate  dateAdded;
 }

@@ -1,5 +1,7 @@
 package com.frank.model;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -13,5 +15,6 @@ public class Location {
 
 	private String lat;
 	@JsonProperty("long")
+	@Field("long")
 	private String mylong;
 }

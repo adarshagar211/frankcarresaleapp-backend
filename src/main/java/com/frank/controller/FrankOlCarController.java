@@ -3,18 +3,13 @@ package com.frank.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.frank.model.CarDetails;
-import com.frank.model.Vehicle;
-import com.frank.model.Warehouse;
 import com.frank.service.FrankOlCarService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -25,27 +20,41 @@ public class FrankOlCarController {
 	@Autowired
 	private FrankOlCarService frankOlCarService;
 
+	// Get All Car Details for display on UI
 	@GetMapping("/warehouse")	
-	public List<CarDetails> getAll() {
-		return frankOlCarService.getAll();
+	public ResponseEntity<List<CarDetails>> getAll() {
+		log.info("Getting all Car Details present in warehouse");
+		try {
+			List<CarDetails> carDetails = frankOlCarService.getAll() ;
+		    return ResponseEntity.ok(carDetails); 
+		}catch(Exception ex) {
+			log.debug("Error while retriving data from DB ", ex);
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
-	@GetMapping("/warehouse/{warehouseid}")
-	public Warehouse getCarDetails(@PathVariable String warehouseid) throws Exception {
-		Warehouse warehouse = frankOlCarService.getCarDetails(warehouseid);
-		return warehouse;
+	// Get More Car Details for vehicle click on UI
+  	@GetMapping("/warehouse/{warehouseid}/vehicleId/{vehicleId}")
+	public ResponseEntity<CarDetails> getCarDetails(@PathVariable String warehouseid, @PathVariable String vehicleId) throws Exception {
+		log.info("Getting requested Car Detail present in warehouse");
+		try {
+			CarDetails carDetails = frankOlCarService.getCarDetails(warehouseid, vehicleId);
+			return ResponseEntity.ok(carDetails); 
+		}catch(Exception ex) {
+			log.debug("Error while retriving data from DB ", ex);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+	
+    // Shopping Cart related API for update and retrieve shopping Cart 
+	/*@GetMapping("/shoppingcart")
+	public List<Vehicle> getShoppingCartList() throws Exception {
+		return frankOlCarService.getShoppingCartList();
 	}
 
-	@GetMapping("/getUser/{userid}/shoppingcart")
-	public List<Vehicle> getShoppingCartList(@PathVariable String userid) throws Exception {
-		return frankOlCarService.getShoppingCartList(userid);
-	}
-
-	@PostMapping("/getUser/{userid}/shoppingcart")
-	public List<Vehicle> getShoppingCartList(@PathVariable String userid, @RequestBody Vehicle vehicle)
+	@PostMapping("/update/shoppingcart")
+	public List<Vehicle> getShoppingCartList(@RequestBody CarDetails carDetails)
 			throws Exception {
-		return frankOlCarService.getShoppingCartList(userid);
-	}
-	
-	
+		return frankOlCarService.updateShoppingCart(carDetails);
+	}*/
 }
