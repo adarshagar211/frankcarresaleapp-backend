@@ -43,7 +43,7 @@ public class FrankOlCarService {
 				carDetails.add(cardetail);
 			});
 		});
-		carDetails.sort(Comparator.comparing(CarDetails::getDateAdded).reversed());
+		carDetails.sort(Comparator.comparing(CarDetails::getDateAdded));
 		return carDetails;
 	}
 	

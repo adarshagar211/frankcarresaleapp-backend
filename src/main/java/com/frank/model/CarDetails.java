@@ -1,5 +1,6 @@
 package com.frank.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -12,8 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class CarDetails {
+public class CarDetails implements Serializable{
 
+	private static final long serialVersionUID = -5006198098755345999L;
+	
 	private String warehouseId;
 	private String warehouseName;
 	private Location location;

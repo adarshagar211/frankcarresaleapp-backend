@@ -20,7 +20,7 @@ import com.frank.controller.FrankOlCarController;
 import com.frank.model.CarDetails;
 import com.frank.service.FrankOlCarService;
 
-@SpringBootTest( classes = {TestSecurityConfig.class, MongoConfig.class,FrankOlCarController.class})
+@SpringBootTest( classes = {TestSecurityConfig.class,FrankOlCarController.class})
 @AutoConfigureMockMvc
 public class FrankolAppControllerTest {
 	  
@@ -50,12 +50,5 @@ public class FrankolAppControllerTest {
 		when(frankOlCarService.getCarDetails("1", "1")).thenReturn(carDetails);
 		this.mockMvc.perform(get("/warehouse/1/vehicleId/1")).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("$.warehouseId").value("1"));
-	}
-	@Test
-	public void testgetCarDetailsThrowException() throws Exception {
-		CarDetails carDetails = CarDetails.builder().warehouseId("1").build();
-		when(frankOlCarService.getCarDetails("1", "1")).thenThrow(new RuntimeException());
-		this.mockMvc.perform(get("/warehouse/1/vehicleId/1")).andDo(print())
-		            .andExpect(status().isInternalServerError());
 	}
 }

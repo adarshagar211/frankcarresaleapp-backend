@@ -1,5 +1,7 @@
 package com.frank.model;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Document("warehouses")
-public class Warehouse {
+public class Warehouse implements Serializable{
+
+	private static final long serialVersionUID = -8634691922408928387L;
 	
 	@Id
 	private String _id;
